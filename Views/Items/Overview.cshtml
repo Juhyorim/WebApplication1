@@ -1,0 +1,31 @@
+﻿@model WebApplication1.Models.Item
+@{
+	var items = new List<String> { "item1", "item2" };
+	var isLoggedIn = true;
+}
+
+
+<p>This is the name of the item @Model.Name </p>
+
+<ul>
+	@foreach(var item in items)
+	{
+		<li>@item</li>
+	}
+
+	@if (isLoggedIn)
+	{
+		<p>Welcome back!</p>
+	} else
+	{
+		<p>please login!</p>
+	}
+</ul>
+
+<form asp-action="Submit">
+	<div>
+		<input asp-for="Name" />
+	</div>
+
+	<button type="submit">Submit</button>
+</form>
