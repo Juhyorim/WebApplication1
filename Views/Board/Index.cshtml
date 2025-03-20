@@ -12,18 +12,16 @@
 		<tr>
 			<th>BoardId</th>
 			<th>Title</th>
-			<th>Content</th>
 			<th>Writer</th>
 			<th>CreatedAt</th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach(var board in Model)
+		@foreach (var board in Model)
 		{
-			<tr>
+			<tr onclick="window.location='/board/info/@board.Id';" style="cursor: pointer;">
 				<td>@board.Id</td>
 				<td>@board.Title</td>
-				<td>@board.Content</td>
 				<td>@board.Member.Name</td>
 				<td>@board.CreatedAt</td>
 			</tr>

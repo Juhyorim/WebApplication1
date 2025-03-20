@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.limeboard.Board;
+@{
+	ViewData["Title"] = "Info";
+}
+
+<h3>Board Info</h3>
+
+<div class="form-group">
+	<label for="Id">Id</label>
+	<input type="text" class="form-control" asp-for="Id" readonly/>
+</div>
+
+<div class="form-group">
+	<label for="CreatedAt">CreatedAt</label>
+	<input type="datetime" class="form-control" asp-for="CreatedAt" readonly />
+</div>
+
+<div class="form-group">
+	<label for="Title">Title</label>
+	<input type="text" class="form-control" asp-for="Title" readonly />
+</div>
+
+
+<div class="form-group">
+	<label for="Writer">Writer</label>
+	<input type="text" class="form-control" asp-for="Member.Name" readonly />
+</div>
+
+<div class="form-group">
+	<label for="Content">Content</label>
+	<input type="text" class="form-control" asp-for="Content" readonly />
+</div>
