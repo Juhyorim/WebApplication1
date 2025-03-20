@@ -21,6 +21,8 @@ namespace WebApplication1.Controllers
         {
             var item = await _context.Items.Include(s => s.SerialNumber)
                                            .Include(c => c.Category)
+                                           .Include(ic => ic.ItemClients)
+                                           .ThenInclude(c => c.Client) //Many To Many때문에 해준다는데 다시 찾아보자 ㅇ
                                            .ToListAsync();
 
             return View(item);
