@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         //메인페이지에 아이템 다 나오게 ㅇㅇ select
         public async Task<IActionResult> Index()
         {
-            var item = await _context.Items.ToListAsync();
+            var item = await _context.Items.Include(s => s.SerialNumber).ToListAsync();
 
             return View(item);
         }
@@ -36,6 +36,45 @@ namespace WebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            return View(item); //redirect index page
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price")] Item item)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(item);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(item);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var item = await _context.Items.FindAsync(id);
+            if (item != null)
+            {
+                _context.Items.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
 
         //이전 학습 코드

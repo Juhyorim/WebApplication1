@@ -8,6 +8,28 @@ namespace WebApplication1.Data
     {
         public MyAppContext(DbContextOptions<MyAppContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // 관계 설정
+            modelBuilder.Entity<Item>()
+                .HasOne(i => i.SerialNumber)
+                .WithOne(s => s.Item)
+                .HasForeignKey<SerialNumber>(s => s.ItemId);
+
+            // 먼저 Item 데이터를 추가하되, SerialNumberId는 null로 시작
+            modelBuilder.Entity<Item>().HasData(
+                new Item { Id = 8, Name = "microphone", Price = 40 }
+            );
+
+            // 그 다음 SerialNumber 데이터 추가
+            modelBuilder.Entity<SerialNumber>().HasData(
+                new SerialNumber { Id = 11, Name = "MIC150", ItemId = 8 }
+            );
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Item> Items { get; set; }
+        public DbSet<SerialNumber> SerialNumbers { get; set; }
     }
 }
