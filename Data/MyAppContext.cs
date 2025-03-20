@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Models.limeboard;
 
 namespace WebApplication1.Data
 {
@@ -10,6 +11,12 @@ namespace WebApplication1.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //limeboard
+            modelBuilder.Entity<Member>()
+                .Property(m => m.JoinAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            //item, category, client
             modelBuilder.Entity<ItemClient>().HasKey(ic => new
             {
                 ic.ItemId,
@@ -43,6 +50,11 @@ namespace WebApplication1.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        //limeboard
+        public DbSet<Member> Members {  get; set; }
+        public DbSet<Board> Boards { get; set; }
+
+        //item, category, client
         public DbSet<Item> Items { get; set; }
         public DbSet<SerialNumber> SerialNumbers { get; set; }
         public DbSet<Category> Categories { get; set; }
