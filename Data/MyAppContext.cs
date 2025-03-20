@@ -16,6 +16,10 @@ namespace WebApplication1.Data
                 .Property(m => m.JoinAt)
                 .HasDefaultValueSql("GETDATE()");
 
+            modelBuilder.Entity<Board>()
+                .Property(b => b.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
             //item, category, client
             modelBuilder.Entity<ItemClient>().HasKey(ic => new
             {
