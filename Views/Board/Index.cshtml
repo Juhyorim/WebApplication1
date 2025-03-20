@@ -21,9 +21,9 @@
 	<tbody>
 		@foreach (var board in Model)
 		{
-			<tr onclick="window.location='/board/info/@board.Id';" style="cursor: pointer;">
+			<tr>
 				<td>@board.Id</td>
-				<td>@board.Title</td>
+				<td onclick="window.location='/board/info/@board.Id';" style="cursor: pointer;">@board.Title</td>
 				<td>@board.Member.Name</td>
 				<td>@board.CreatedAt</td>
 			</tr>

@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.limeboard.Board
+@{
+	ViewData["Title"] = "Delete";
+}
+
+<h3>Are you sure you want to delete this 게시글??</h3>
+
+<div class="form-group">
+	<label for="Id">Id</label>
+	<input type="text" class="form-control" asp-for="Id" readonly />
+</div>
+
+<div class="form-group">
+	<label for="CreatedAt">CreatedAt</label>
+	<input type="datetime" class="form-control" asp-for="CreatedAt" readonly />
+</div>
+
+<div class="form-group">
+	<label for="Title">Title</label>
+	<input type="text" class="form-control" asp-for="Title" readonly />
+</div>
+
+<div class="form-group">
+	<label for="Content">Content</label>
+	<input type="text" class="form-control" asp-for="Content" readonly />
+</div>
+
+
+<form asp-action="Delete" method="post">
+	<input type="hidden" asp-for="Id" />
+	<input type="submit" class="btn btn-danger" value="Delete" />
+</form>

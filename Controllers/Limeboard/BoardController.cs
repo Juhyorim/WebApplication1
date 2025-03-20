@@ -88,5 +88,25 @@ namespace WebApplication1.Controllers.Limeboard
 
             return View(board);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var board = await _context.Boards.FirstOrDefaultAsync(b => b.Id == id);
+
+            return View(board);
+        }
+
+        [HttpPost, ActionName("Delete")] //오버로딩으로 불가능하니까 ActionName으로 구분
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var originBoard = await _context.Boards.FirstOrDefaultAsync(b => b.Id == id);
+            if (originBoard != null)
+            {
+                _context.Boards.Remove(originBoard);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
