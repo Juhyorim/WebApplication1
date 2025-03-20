@@ -59,5 +59,34 @@ namespace WebApplication1.Controllers.Limeboard
 
              return View(board);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var board = await _context.Boards.FirstOrDefaultAsync(b => b.Id == id);
+
+            return View(board);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Title, Content")] Board board)
+        {
+            var originBoard = await _context.Boards.FirstOrDefaultAsync(b => b.Id == id);
+            if (originBoard == null)
+            {
+                return NotFound();
+            }
+
+            originBoard.Title = board.Title;
+            originBoard.Content = board.Content;
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(originBoard); // board 대신 originBoard 사용
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(board);
+        }
     }
 }
