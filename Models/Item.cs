@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1.Models
 {
@@ -10,5 +11,9 @@ namespace WebApplication1.Models
         public int? SerialNumberId { get; set; }
         //[ForeignKey("SerialNumberId")]
         public SerialNumber? SerialNumber { get; set; }
+
+        public int? CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
     }
 }
