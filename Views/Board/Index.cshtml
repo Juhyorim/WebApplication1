@@ -1,0 +1,33 @@
+﻿@model List<WebApplication1.Models.limeboard.Board>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h3>LimeBoard</h3>
+<a href="/board/create">글쓰기</a>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>BoardId</th>
+			<th>Title</th>
+			<th>Content</th>
+			<th>Writer</th>
+			<th>CreatedAt</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var board in Model)
+		{
+			<tr>
+				<td>@board.Id</td>
+				<td>@board.Title</td>
+				<td>@board.Content</td>
+				<td>@board.Member.Name</td>
+				<td>@board.CreatedAt</td>
+			</tr>
+		}
+	</tbody>
+
+</table>

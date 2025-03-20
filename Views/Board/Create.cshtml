@@ -1,0 +1,22 @@
+﻿@model WebApplication1.Models.limeboard.Board
+@{
+	ViewData["Title"] = "CreateBoard";
+}
+
+<h3>Create Content!</h3>
+
+<form asp-cation="Create" method="post" >
+
+	<div class="form-group">
+		<label for="Title">Title</label>
+		<input type="text" class="form-control" asp-for="Title" />
+	</div>
+
+	<div class="form-group">
+		<label for="Content">Content</label>
+		<input type="text" class="form-control" asp-for="Content" />
+	</div>
+
+	<button type="submit" class="btn btn-primary">submid</button>
+
+</form>
