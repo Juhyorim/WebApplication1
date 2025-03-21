@@ -1,34 +1,93 @@
-﻿@model List<WebApplication1.Models.limeboard.Board>
+﻿@using WebApplication1.Models.limeboard
+@model WebApplication1.Models.limeboard.PaginationModel<Board>
 
 @{
 	ViewData["Title"] = "Index";
 }
 
-<h3>LimeBoard</h3>
+<div>
+    <h3>LimeBoard</h3>
 
-@* <a href="/board/create">글쓰기</a> *@
-<button onclick="location.href='/board/create'">글쓰기</button>
+    @* <a href="/board/create">글쓰기</a> *@
+    <button onclick="location.href='/board/create'">글쓰기</button>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>BoardId</th>
-			<th>Title</th>
-			<th>Writer</th>
-			<th>CreatedAt</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var board in Model)
-		{
-			<tr>
-				<td>@board.Id</td>
-				<td onclick="window.location='/board/info/@board.Id';" style="cursor: pointer;">@board.Title</td>
-				<td>@board.Member.Name</td>
-				<td>@board.CreatedAt</td>
-			</tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>BoardId</th>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>CreatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var board in Model.Items)
+            {
+                <tr>
+                    <td>@board.Id</td>
+                    <td onclick="window.location='/board/info/@board.Id';" style="cursor: pointer;">@board.Title</td>
+                    <td>@board.Member.Name</td>
+                    <td>@board.CreatedAt.ToString("yyyy-MM-dd")</td>
+                </tr>
 
-		}
-	</tbody>
+            }
+        </tbody>
 
-</table>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <!-- 이전 페이지 버튼 -->
+            @if (Model.HasPreviousPage && Model.PreviousCursor != Model.TotalItems + 1)
+            {
+                <li class="page-item">
+                    @* <a class="page-link" href="@Url.Action("Index", new { cursor = Model.PreviousCursor, previous = true })" aria-label="Previous"> *@
+                    @*     <span aria-hidden="true">&laquo; 이전</span> *@
+                    @* </a> *@
+                    <a class="page-link" href="@Url.Action("Index", new { cursor = Model.PreviousCursor + 11 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo; 이전</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo; 이전</span>
+                    </a>
+                </li>
+            }
+
+            <!-- 첫 페이지로 버튼 -->
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index")" aria-label="First">
+                    <span aria-hidden="true">처음으로</span>
+                </a>
+            </li>
+
+            <!-- 다음 페이지 버튼 -->
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { cursor = Model.NextCursor })" aria-label="Next">
+                        <span aria-hidden="true">다음 &raquo;</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">다음 &raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+    <div class="text-center">
+        <p>전체 @Model.TotalItems 개의 게시글</p>
+        <p>previous cursor: @Model.PreviousCursor</p>
+        <p>Next cursor: @Model.NextCursor</p>
+    </div>
+</div>
